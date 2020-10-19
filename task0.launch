@@ -1,0 +1,15 @@
+<launch>
+    <node pkg="turtlesim" type="turtlesim_node" name="turtlesim" output="screen"/>
+    <node pkg="hello_world" type="move_turtle_circle.py" name="move_turtle_circle.py" output="screen"/>
+    <arg name="record" default="false"/>
+<arg name="duration" default="10"/>
+<arg name="rec_name" default="turtle_record.bag"/>
+
+<group if="$(arg record)">
+
+    <node name="rosbag_record_turtle" pkg="rosbag" type="record"
+       args="record -O $(find hello_world)/bag_files/$(arg rec_name) --duration=$(arg duration) --chunksize=10 /turtle1/cmd_vel /turtle1/pose" output="screen"/>
+
+</group>
+
+</launch>
